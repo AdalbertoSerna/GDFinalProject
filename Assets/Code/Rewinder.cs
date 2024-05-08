@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Rewinder : MonoBehaviour
 {
-    [SerializeField] private float interactionRange = 2f; 
+    [SerializeField] private float interactionRange = 1f; 
     [SerializeField] Player player;
     [SerializeField] bool full = false;
    
@@ -13,7 +13,7 @@ public class Rewinder : MonoBehaviour
         if(full == false && !player.invetoryEmpty()){
             full = true;
             player.removeItem();
-            Debug.Log("item sucessfully removed");
+            GetComponent<AudioSource>().Play();
         }
         else{
         player.addInvetory();
@@ -36,8 +36,6 @@ public class Rewinder : MonoBehaviour
     {
         
         float distanceToPlayer = Vector3.Distance(transform.position, position);
-        
-       
         return distanceToPlayer <= interactionRange;
     }
 }

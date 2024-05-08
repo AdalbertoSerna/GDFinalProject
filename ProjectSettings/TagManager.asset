@@ -5,14 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - MoneyTracker
+  - NPC
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Shelf
   - Water
   - UI
-  - 
+  - NPC
   - 
   - 
   - 
@@ -41,4 +42,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: 
+    uniqueID: 4279396429
     locked: 0

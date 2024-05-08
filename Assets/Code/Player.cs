@@ -6,9 +6,10 @@ public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
     [Header("Stats")]
-    [SerializeField] float speed = 5;
+    [SerializeField] public float speed = 5;
     [SerializeField] public int money = 0;
-    int[] arr = {1,1,1};
+    
+    int[] arr = {0,0,0};
     
     Rigidbody2D rb;
 
@@ -25,9 +26,9 @@ public class Player : MonoBehaviour
     {
         transform.rotation = Quaternion.identity;
     }
-    public void MovePlayer(Vector3 direction){
-        Vector3 currentVel = new Vector3(0,0,0);
-        rb.velocity = currentVel + (direction * speed);
+    public void MovePlayer(Vector3 direction)
+    {
+        transform.position += direction * Time.deltaTime * speed;
     }
    // public void pickup(){
        // GetComponent<AudioSource>().Play();
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour
         for(int i = 0; i<arr.Length;i++){
             if(arr[i] == 0){
                 arr[i] = 1;
+                Debug.Log("Add to inventory");
                 break;
             }
             else{
@@ -65,8 +67,33 @@ public class Player : MonoBehaviour
     }
     public void addMoney(){
         if(!invetoryEmpty()){
-        GameObject.FindGameObjectWithTag("MoneyTracker").GetComponent<MoneyTracker>().moneyTracker();
+        int money = 10;
+        if(PlayerPrefs.HasKey("Candy")){
+            money+=10;
         }
+        if(PlayerPrefs.HasKey("Popcorn")){
+            money+=5;
+        }
+        if(PlayerPrefs.HasKey("DVD")){
+            money+=10;
+        }
+        if(PlayerPrefs.HasKey("Bluray")){
+            money+=20;
+        }
+        GameObject.FindGameObjectWithTag("MoneyTracker").GetComponent<MoneyTracker>().AddPoints(money);
+        }
+    }
+    public void MoveCreatureToward(Vector3 target)
+    {
+        Vector3 direction = target - transform.position;
+        //Debug.Log(direction);
+        MovePlayer(direction.normalized);
+    }
+    public void MoveLine(Vector3 target, System.Action value)
+    {
+        Vector3 direction = target - transform.position;
+        //Debug.Log(direction);
+        MovePlayer(direction.normalized);
     }
 }
 
